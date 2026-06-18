@@ -38,11 +38,11 @@ export default function BackToTop() {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-50 px-4 py-2 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-sm font-semibold shadow-md hover:shadow-lg hover:shadow-primary/30 dark:hover:shadow-accent/25 hover:-translate-y-0.5 transition-all duration-300"
+      className="fixed bottom-6 right-6 z-50 p-3 md:px-4 md:py-2 rounded-full md:rounded-xl bg-gradient-to-r from-primary to-accent text-white text-sm font-semibold shadow-md hover:shadow-lg hover:shadow-primary/30 dark:hover:shadow-accent/25 hover:-translate-y-0.5 transition-all duration-300"
     >
       <span className="flex items-center gap-1.5">
         <ArrowUp size={16} />
-        Back to Top
+        <span className="hidden md:inline">Back to Top</span>
       </span>
     </button>
   );

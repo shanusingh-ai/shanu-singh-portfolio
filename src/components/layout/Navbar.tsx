@@ -81,13 +81,8 @@ export function Navbar() {
               }}
               className="relative z-10 group flex-shrink-0"
             >
-              {/* Desktop: Full name */}
-              <span className="hidden sm:inline text-xl font-extrabold tracking-tight gradient-text hover:brightness-110 transition-all duration-300">
+              <span className="text-xl font-extrabold tracking-tight gradient-text hover:brightness-110 transition-all duration-300">
                 Shanu Singh
-              </span>
-              {/* Mobile: Monogram */}
-              <span className="sm:hidden text-xl font-extrabold tracking-tight gradient-text hover:brightness-110 transition-all duration-300">
-                SS
               </span>
             </a>
 
@@ -132,14 +127,20 @@ export function Navbar() {
               {/* Theme Toggle */}
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="hidden md:flex p-2.5 rounded-xl text-white border border-white/15 dark:border-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                className="flex p-2 md:p-2.5 rounded-xl text-white border border-white/15 dark:border-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
                 style={{
                   background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)',
                   boxShadow: '0 2px 8px rgba(99, 102, 241, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06)',
                 }}
                 aria-label="Toggle Theme"
               >
-                {mounted && (theme === "dark" ? <Sun size={18} /> : <Moon size={18} />)}
+                {mounted && (
+                  theme === "dark" ? (
+                    <Sun className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+                  ) : (
+                    <Moon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+                  )
+                )}
               </button>
 
               {/* Mobile Toggle */}
@@ -159,41 +160,90 @@ export function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-white/95 dark:bg-background/95 backdrop-blur-xl md:hidden"
-          >
-            <nav className="flex flex-col items-center justify-center h-full gap-2">
-              {navItems.map((item, index) => {
-                const isActive = activeId === item.href.replace("#", "");
-                return (
-                  <motion.a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-black/30 dark:bg-black/60 backdrop-blur-sm md:hidden"
+            />
+
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-[300px] h-screen bg-white/95 dark:bg-[#0a0a0f]/95 border-l border-slate-200/60 dark:border-white/[0.06] shadow-2xl flex flex-col md:hidden"
+            >
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between px-6 h-16 border-b border-slate-100 dark:border-white/[0.04] flex-shrink-0">
+                <span className="text-lg font-extrabold tracking-tight gradient-text hover:brightness-110 transition-all duration-300">
+                  Shanu Singh
+                </span>
+                <div className="flex items-center gap-2">
+                  {/* Theme Toggle inside drawer */}
+                  <button
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="flex p-2 rounded-xl text-white border border-white/15 dark:border-white/10 backdrop-blur-sm transition-all duration-300"
+                    style={{
+                      background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)',
+                      boxShadow: '0 2px 8px rgba(99, 102, 241, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06)',
                     }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
-                    className={cn(
-                      "px-8 py-3 text-lg font-medium rounded-xl transition-colors",
-                      isActive
-                        ? "text-slate-900 dark:text-white bg-slate-100 dark:bg-white/[0.06] border border-slate-200/60 dark:border-white/[0.08]"
-                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
-                    )}
+                    aria-label="Toggle Theme"
                   >
-                    {item.label}
-                  </motion.a>
-                );
-              })}
-            </nav>
-          </motion.div>
+                    {mounted && (
+                      theme === "dark" ? (
+                        <Sun className="w-4 h-4" />
+                      ) : (
+                        <Moon className="w-4 h-4" />
+                      )
+                    )}
+                  </button>
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <X size={22} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Navigation Items */}
+              <nav className="flex flex-col gap-1 p-6 overflow-y-auto">
+                {navItems.map((item, index) => {
+                  const isActive = activeId === item.href.replace("#", "");
+                  return (
+                    <motion.a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavClick(item.href);
+                      }}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      transition={{ delay: index * 0.04, duration: 0.2 }}
+                      className={cn(
+                        "flex items-center w-full px-4 py-3 text-base font-medium rounded-xl transition-all duration-200 border border-transparent hover:text-slate-900 dark:hover:text-white",
+                        isActive
+                          ? "text-slate-900 dark:text-white bg-slate-100 dark:bg-white/[0.06] border-slate-200/60 dark:border-white/[0.08] shadow-sm"
+                          : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/[0.02]"
+                      )}
+                    >
+                      {item.label}
+                    </motion.a>
+                  );
+                })}
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

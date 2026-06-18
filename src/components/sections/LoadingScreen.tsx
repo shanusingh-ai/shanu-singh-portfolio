@@ -50,7 +50,7 @@ export function LoadingScreen() {
             className="relative z-10 text-center"
           >
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">
-              <span className="gradient-text">SS</span>
+              <span className="gradient-text">Shanu Singh</span>
             </h1>
             <p className="text-sm text-slate-500 font-mono tracking-widest uppercase">
               Loading

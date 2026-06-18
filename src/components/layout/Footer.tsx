@@ -22,7 +22,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
-          <div>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h3 className="text-xl font-extrabold tracking-tight mb-3">
               <span className="gradient-text">Shanu Singh</span>
             </h3>
@@ -33,11 +33,11 @@ export function Footer() {
           </div>
 
           {/* Quick Nav */}
-          <div>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h4 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
               Quick Links
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-2 flex flex-col items-center md:items-start">
               {navItems.slice(0, 5).map((item) => (
                 <li key={item.href}>
                   <a
@@ -56,11 +56,11 @@ export function Footer() {
           </div>
 
           {/* Social */}
-          <div>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h4 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
               Let&apos;s Connect
             </h4>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3">
               {socialLinks.map((link) => (
                 <SocialIcon key={link.name} link={link} size="sm" />
               ))}
@@ -69,7 +69,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-slate-200/60 dark:border-white/5 flex flex-col items-center">
+        <div className="mt-16 pt-8 border-t border-slate-200/60 dark:border-white/5 flex flex-col items-center pb-20 md:pb-8">
           <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} Shanu Singh. All rights reserved.
           </p>

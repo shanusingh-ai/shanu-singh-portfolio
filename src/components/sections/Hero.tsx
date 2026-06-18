@@ -54,7 +54,7 @@ export function Hero() {
         className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center"
       >
         {/* Profile Photo */}
-        <motion.div variants={item} className="mb- mt-2 md:mt-3">
+        <motion.div variants={item} className="mb-6 mt-2 md:mt-3">
           <div className="relative mx-auto w-32 h-32 md:w-40 md:h-40">
             <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-accent animate-spin-slow opacity-35 blur-lg" />
             <div className="relative w-full h-full rounded-full bg-slate-50 dark:bg-background-secondary border-2 border-slate-200/50 dark:border-white/10 flex items-center justify-center overflow-hidden">
@@ -80,7 +80,7 @@ export function Hero() {
         {/* Name */}
         <motion.h1
           variants={item}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-3"
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-3"
         >
           <span className="text-slate-900 dark:text-white">Hi, I&apos;m </span>
           <span className="gradient-text">{personalInfo.name}</span>
@@ -89,7 +89,7 @@ export function Hero() {
         {/* Typewriter */}
         <motion.div
           variants={item}
-          className="h-10 md:h-12 flex items-center justify-center mb-4"
+          className="min-h-[2.5rem] md:min-h-[3rem] h-auto flex items-center justify-center mb-4"
         >
           <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 font-light">
             <span className="text-primary-light font-mono">&lt;</span>{" "}
