@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 
-export function useScrollSpy(sectionIds: string[], offset: number = 20) {
+export function useScrollSpy(sectionIds: string[], offset: number = 10) {
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
     const handleScroll = () => {
-      const navbarHeight = 88;
+      const isMobile = window.innerWidth < 768;
+      const navbarHeight = isMobile ? 64 : 80;
       let currentId = sectionIds[0] || '';
 
       for (const id of sectionIds) {

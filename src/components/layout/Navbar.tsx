@@ -14,7 +14,16 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const sectionIds = navItems.map((item) => item.href.replace("#", ""));
-  const activeId = useScrollSpy(sectionIds);
+  const scrollActiveId = useScrollSpy(sectionIds);
+  const [clickedSection, setClickedSection] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (scrollActiveId) {
+      setClickedSection(null);
+    }
+  }, [scrollActiveId]);
+
+  const activeId = clickedSection || scrollActiveId || "home";
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -42,6 +51,8 @@ export function Navbar() {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
+    const sectionName = href.replace("#", "");
+    setClickedSection(sectionName);
     const element = document.querySelector(href);
     if (element) {
       const navbarHeight = window.innerWidth >= 768 ? 80 : 64;
@@ -61,7 +72,7 @@ export function Navbar() {
         transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled
+          (isScrolled || isOpen)
             ? "bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/[0.06] shadow-lg shadow-slate-200/20 dark:shadow-black/20"
             : "bg-transparent",
         )}
@@ -168,7 +179,7 @@ export function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-40 bg-black/30 dark:bg-black/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-x-0 bottom-0 top-16 z-30 bg-black/30 dark:bg-black/60 backdrop-blur-sm md:hidden"
             />
 
             {/* Drawer */}
@@ -177,43 +188,8 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-[300px] h-screen bg-white/95 dark:bg-[#0a0a0f]/95 border-l border-slate-200/60 dark:border-white/[0.06] shadow-2xl flex flex-col md:hidden"
+              className="fixed right-0 top-16 bottom-0 z-40 w-full max-w-[300px] h-[calc(100vh-64px)] bg-white/95 dark:bg-[#0a0a0f]/95 border-l border-slate-200/60 dark:border-white/[0.06] shadow-2xl flex flex-col md:hidden"
             >
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between px-6 h-16 border-b border-slate-100 dark:border-white/[0.04] flex-shrink-0">
-                <span className="text-lg font-extrabold tracking-tight gradient-text hover:brightness-110 transition-all duration-300">
-                  Shanu Singh
-                </span>
-                <div className="flex items-center gap-2">
-                  {/* Theme Toggle inside drawer */}
-                  <button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="flex p-2 rounded-xl text-white border border-white/15 dark:border-white/10 backdrop-blur-sm transition-all duration-300"
-                    style={{
-                      background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)',
-                      boxShadow: '0 2px 8px rgba(99, 102, 241, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06)',
-                    }}
-                    aria-label="Toggle Theme"
-                  >
-                    {mounted && (
-                      theme === "dark" ? (
-                        <Sun className="w-4 h-4" />
-                      ) : (
-                        <Moon className="w-4 h-4" />
-                      )
-                    )}
-                  </button>
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
-                    aria-label="Close menu"
-                  >
-                    <X size={22} />
-                  </button>
-                </div>
-              </div>
-
               {/* Navigation Items */}
               <nav className="flex flex-col gap-1 p-6 overflow-y-auto">
                 {navItems.map((item, index) => {
@@ -234,7 +210,7 @@ export function Navbar() {
                         "flex items-center w-full px-4 py-3 text-base font-medium rounded-xl transition-all duration-200 border border-transparent hover:text-slate-900 dark:hover:text-white",
                         isActive
                           ? "text-slate-900 dark:text-white bg-slate-100 dark:bg-white/[0.06] border-slate-200/60 dark:border-white/[0.08] shadow-sm"
-                          : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/[0.02]"
+                          : "text-slate-600 dark:text-slate-300"
                       )}
                     >
                       {item.label}

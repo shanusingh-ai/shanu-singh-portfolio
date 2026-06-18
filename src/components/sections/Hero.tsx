@@ -160,7 +160,7 @@ export function Hero() {
         </motion.div>
 
         {/* Scroll Arrow */}
-        <div className="relative mt-1 flex justify-center">
+        <div className="relative -mt-2 flex justify-center">
           <svg width="0" height="0" className="absolute">
             <defs>
               <linearGradient id="blue-purple-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
